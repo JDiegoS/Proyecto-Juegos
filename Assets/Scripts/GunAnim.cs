@@ -24,6 +24,7 @@ public class GunAnim : MonoBehaviour
     public Animation animPlayer;
     public GameObject pistol;
     public GameObject ak;
+    public GameObject hint;
     public int Health = 1;
     bool muerto = false;
     float regenTime;
@@ -48,15 +49,15 @@ public class GunAnim : MonoBehaviour
             animPlayer.Play("deathP");
             muerto = true;
         }
-        if(Health <= 3 && muerto == false && (Time.time - healthT >= 12))
+        if (Health <= 3 && muerto == false && (Time.time - healthT >= 12))
         {
             healthT = Time.time;
-            if(reg == false)
+            if (reg == false)
             {
                 regenTime = Time.time;
                 reg = true;
             }
-            
+
             Debug.Log(regenTime);
             Debug.Log(healthT);
             AudioSource gunsound = GetComponent<AudioSource>();
@@ -71,7 +72,10 @@ public class GunAnim : MonoBehaviour
 
             }
         }
-
+        if (Input.GetKey(KeyCode.H))
+        {
+            hint.SetActive(true);
+        }
     }
     private void Shoot()
     {
