@@ -8,7 +8,7 @@ public class CubeScript : MonoBehaviour
     public GameObject Player;
     public float Distance;
     public float speed;
-    public float allowedDistance = 5;
+    public int allowedDistance=5;
     public RaycastHit shot;
     public Animation anims;
     public Animation anima;
@@ -18,7 +18,16 @@ public class CubeScript : MonoBehaviour
     float deathtime;
     float t;
     float timeOfShot = 2;
-    float chanceOfHit;
+    int chanceOfHit;
+    public AudioClip fire;
+    public AudioClip miss;
+    public AudioClip miss2;
+    public AudioClip miss3;
+    float chance;
+    public AudioClip scream;
+    float volume;
+    public GameObject trigger;
+    int rangeD;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,69 +37,119 @@ public class CubeScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (dead == false)
+        if (trigger == null)
         {
-            transform.LookAt(Player.transform);
+            if (dead == false)
+            {
+                transform.LookAt(Player.transform);
+            }
+
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out shot))
+            {
+                if(shot.rigidbody != null)
+                {
+                    Distance = shot.distance;
+                    if ((Distance < allowedDistance) && (dead == false) && (Time.time - timeOfShot > 1))
+                    {
+                        timeOfShot = Time.time;
+                        speed = 0f;
+                        anims.Play("shoot");
+                        AudioSource gunsound = GetComponent<AudioSource>();
+                        rangeD = allowedDistance / 10;
+                        chanceOfHit = Random.Range(0, rangeD + 1);
+                        volume = 20 / (Distance);
+                        if (volume >= 1f)
+                        {
+                            gunsound.PlayOneShot(fire, volume);
+                        }
+                        else
+                        {
+                            while (volume > 1f)
+                            {
+                                volume = volume / 1.2f;
+                            }
+                            gunsound.PlayOneShot(fire, volume);
+                        }
+                        if (chanceOfHit == rangeD)
+                        {
+                            PlayerC.SendMessage("GotHit");
+                        }
+
+                    }
+                    if (Distance >= allowedDistance && dead == false)
+                    {
+                        speed = 0.05f;
+
+
+                        anims.Play("run");
+                        transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, speed);
+
+                    }
+
+
+                }
+                else if (shot.rigidbody == null && (Time.time - timeOfShot > 1.5f))
+                {
+                    timeOfShot = Time.time;
+                    chanceOfHit = Random.Range(1, 4);
+                    AudioSource gunsound = GetComponent<AudioSource>();
+                    if (chanceOfHit == 1)
+                    {
+                        gunsound.PlayOneShot(miss, .8f);
+                    }
+                    if (chanceOfHit == 2)
+                    {
+                        gunsound.PlayOneShot(miss2, .8f);
+                    }
+                    if (chanceOfHit == 3)
+                    {
+                        gunsound.PlayOneShot(miss3, .8f);
+                    }
+                }
+            }
+            if (Health <= 0 && dead == false)
+            {
+                volume = 20 / (Distance);
+                AudioSource gunsound = GetComponent<AudioSource>();
+                while (dead != true)
+                {
+                    if (volume <= 1f)
+                    {
+                        anims.Play("death");
+                        gunsound.PlayOneShot(scream, volume);
+                        dead = true;
+                        deathtime = Time.time;
+                    }
+                    else
+                    {
+                        volume = volume / 1.2f;
+                    }
+                }
+
+            }
+            if (dead == true)
+            {
+                t = Time.time - deathtime;
+                if (t >= 3)
+                {
+                    Destroy(sold);
+                }
+
+            }
+
+            if (dead == true)
+            {
+                t = Time.time - deathtime;
+                if (t >= 3)
+                {
+                    Destroy(sold);
+                }
+
+            }
         }
         
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out shot))
-        {
-            Distance = shot.distance;
-            if ((Distance < allowedDistance) && (dead == false) && (Time.time - timeOfShot >1))
-            {
-                timeOfShot = Time.time;
-                speed = 0f;
-                anims.Play("shoot");
-                chanceOfHit = Random.Range(0, 10);
-                Debug.Log ("hola");
-                if (chanceOfHit == 7)
-                {
-                    PlayerC.SendMessage("GotHit");
-                }
-                //yield return new WaitForSeconds(1);
-            }
-            if (Distance >= allowedDistance && dead == false)
-            {
-                speed = 0.02f;
-   
-                
-                anims.Play("run");
-                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, speed);
-                
-                
-            }
-        }
-        if (Health == 0 && dead == false)
-        {
-            anims.Play("death");
-            dead = true;
-            deathtime = Time.time;
-        }
-        if (dead == true)
-        {
-            t = Time.time - deathtime;
-            if (t >= 3)
-            {
-                Destroy(sold);
-            }
-
-        }
-        if (Health == 0 && dead == false)
-        {
-            anims.Play("death");
-            dead = true;
-            deathtime = Time.time;
-        }
-        if (dead == true)
-        {
-            t = Time.time - deathtime;
-            if (t >= 3)
-            {
-                Destroy(sold);
-            }
-
-        }
     }
+
     void GotHit()
     {
         Health -= 1;

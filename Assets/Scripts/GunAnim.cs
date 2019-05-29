@@ -16,6 +16,9 @@ public class GunAnim : MonoBehaviour
     public AudioClip fire;
     public AudioClip switchW;
     public AudioClip reload;
+    public AudioClip heavybreathing;
+    public AudioClip heartbeat;
+    public AudioClip scream;
     public Animation animAK;
     public Animation animP;
     public Animation animPlayer;
@@ -23,6 +26,9 @@ public class GunAnim : MonoBehaviour
     public GameObject ak;
     public int Health = 1;
     bool muerto = false;
+    float regenTime;
+    float healthT=-15;
+    bool reg = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,10 +42,36 @@ public class GunAnim : MonoBehaviour
         Switch();
         if (Health <= 0 && muerto == false)
         {
-            Debug.Log("funcionooooooooooooooooooooooooooooooooooooooooooooooooo");
+            AudioSource gunsound = GetComponent<AudioSource>();
+            gunsound.Stop();
+            gunsound.PlayOneShot(scream);
             animPlayer.Play("deathP");
             muerto = true;
         }
+        if(Health <= 3 && muerto == false && (Time.time - healthT >= 12))
+        {
+            healthT = Time.time;
+            if(reg == false)
+            {
+                regenTime = Time.time;
+                reg = true;
+            }
+            
+            Debug.Log(regenTime);
+            Debug.Log(healthT);
+            AudioSource gunsound = GetComponent<AudioSource>();
+            gunsound.PlayOneShot(heavybreathing, .9f);
+            gunsound.PlayOneShot(heartbeat, 1f);
+            if (Time.time - regenTime >= 11.9)
+            {
+                Debug.Log(regenTime);
+                Health += 3;
+                gunsound.Stop();
+                reg = false;
+
+            }
+        }
+
     }
     private void Shoot()
     {
@@ -52,7 +84,7 @@ public class GunAnim : MonoBehaviour
                 currentAmmo -= 1;
 
                 AudioSource gunsound = GetComponent<AudioSource>();
-                gunsound.PlayOneShot(fire);
+                gunsound.PlayOneShot(shot);
 
                 animP.Play("GunshotP");
 
@@ -82,7 +114,19 @@ public class GunAnim : MonoBehaviour
 
                 animAK.Play("GunshotAK");
 
+                RaycastHit hit;
+                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit))
+                {
+
+
+                    if (hit.transform.tag == "Enemy")
+                    {
+
+                        hit.transform.SendMessage("GotHit");
+                    }
+                }
             }
+
         
 
     }
