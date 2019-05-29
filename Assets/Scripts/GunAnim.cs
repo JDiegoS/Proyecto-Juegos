@@ -18,8 +18,11 @@ public class GunAnim : MonoBehaviour
     public AudioClip reload;
     public Animation animAK;
     public Animation animP;
+    public Animation animPlayer;
     public GameObject pistol;
     public GameObject ak;
+    public int Health = 1;
+    bool muerto = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +34,12 @@ public class GunAnim : MonoBehaviour
     {
         Shoot();
         Switch();
+        if (Health <= 0 && muerto == false)
+        {
+            Debug.Log("funcionooooooooooooooooooooooooooooooooooooooooooooooooo");
+            animPlayer.Play("deathP");
+            muerto = true;
+        }
     }
     private void Shoot()
     {
@@ -46,8 +55,20 @@ public class GunAnim : MonoBehaviour
                 gunsound.PlayOneShot(fire);
 
                 animP.Play("GunshotP");
-                
-            }
+
+                RaycastHit hit;
+                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit))
+                {
+                    Debug.Log(hit.transform.name);
+
+                    if (hit.transform.tag == "Enemy")
+                    {
+                        
+                        hit.transform.SendMessage("GotHit");
+                    }
+                }
+
+                }
         if (Input.GetButton("Fire1") && weaponSelected == 2)
             if (Time.time - lastFired > 0.15)
             {
@@ -62,6 +83,7 @@ public class GunAnim : MonoBehaviour
                 animAK.Play("GunshotAK");
 
             }
+        
 
     }
 
@@ -103,6 +125,10 @@ public class GunAnim : MonoBehaviour
                 animP.Play("TakeoutP");
 
             }
+    }
+    void GotHit()
+    {
+        Health -= 1;
     }
 }
 
