@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public UnityEngine.UI.Text txt;
+    public UnityEngine.UI.Text amm;
+    public UnityEngine.UI.Text hp;
     private bool isPause = false;
     private int cont = 0;
     bool f1 = true;
@@ -12,7 +14,10 @@ public class PauseMenu : MonoBehaviour
     bool f3 = true;
     bool f4 = true;
     public AudioSource collect;
+    float health = 15;
+    int ammo = 60;
     private float masterVolume = 1;
+    float h;
 
 
     // Start is called before the first frame update
@@ -39,43 +44,24 @@ public class PauseMenu : MonoBehaviour
 
 
         }
-        if (GameObject.Find("Ficha 1") == null && f1 == true)
+        if (health <= 0)
         {
-            //collect.Play();
-            cont += 1;
-            Contador();
-            f1 = false;
+            hp.text = "0%";
         }
-        if (GameObject.Find("Ficha 2") == null && f2 == true)
+        if(health> 0)
         {
-            //collect.Play();
-            cont += 1;
-            Contador();
-            f2 = false;
+            h = (health / 15) * 100;
+            hp.text = "" + h + "%";
         }
-        if (GameObject.Find("Ficha 3") == null && f3 == true)
+        if (health <= 0)
         {
-            //collect.Play();
-            cont += 1;
-            Contador();
-            f3 = false;
+            amm.text = "0";
         }
-        if (GameObject.Find("Ficha 4") == null && f4 == true)
+        if (health > 0)
         {
-            //collect.Play();
-            cont += 1;
-            Contador();
-            f4 = false;
+            amm.text = "" + ammo + "";
         }
-        if (cont == 5)
-        {
-            Victory();
-        }
-        if (GameObject.Find("Player") == null)
-        {
-            Defeat();
-        }
-
+        
     }
     public void Pause()
     {
@@ -96,9 +82,19 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1.0f;
         isPause = false;
     }
-    public void Contador()
+    public void ContadorA()
     {
-        txt.text = "C " + cont;
+        ammo -= 1;
+    }
+    public void ContadorHP()
+    {
+        health = health - 1;
+        
+    }
+    public void SumarHP()
+    {
+        health += 3;
+        
     }
     public void Victory()
     {

@@ -10,8 +10,8 @@ public class GunAnim : MonoBehaviour
     private float lastFired;
     private float lastSwitch;
     public float fireRate = 6;
-    private int currentAmmo;
-    private int weaponSelected = 1;
+
+    private int weaponSelected = 0;
     public Camera cam;
     public AudioClip fire;
     public AudioClip switchW;
@@ -29,7 +29,11 @@ public class GunAnim : MonoBehaviour
     bool muerto = false;
     float regenTime;
     float healthT=-15;
+    int ammo = 60;
     bool reg = false;
+    public GameObject menu;
+    float deathTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,11 +47,14 @@ public class GunAnim : MonoBehaviour
         Switch();
         if (Health <= 0 && muerto == false)
         {
+            deathTime = Time.time;
             AudioSource gunsound = GetComponent<AudioSource>();
             gunsound.Stop();
             gunsound.PlayOneShot(scream);
+            Time.timeScale = .50f;
             animPlayer.Play("deathP");
             muerto = true;
+            menu.SendMessage("Defeat");
         }
         if (Health <= 3 && muerto == false && (Time.time - healthT >= 12))
         {
@@ -67,6 +74,7 @@ public class GunAnim : MonoBehaviour
             {
                 Debug.Log(regenTime);
                 Health += 3;
+                menu.SendMessage("SumarHP");
                 gunsound.Stop();
                 reg = false;
 
@@ -79,104 +87,117 @@ public class GunAnim : MonoBehaviour
     }
     private void Shoot()
     {
-        if (Input.GetButton("Fire1") && weaponSelected == 1)
-            if (Time.time - lastFired > 0.55)
-            {
-                lastFired = Time.time;
+        if (muerto != true)
+        {
 
-                //Remove 1 bullet from ammo
-                currentAmmo -= 1;
 
-                AudioSource gunsound = GetComponent<AudioSource>();
-                gunsound.PlayOneShot(shot);
-
-                animP.Play("GunshotP");
-
-                RaycastHit hit;
-                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit))
+            if (Input.GetButton("Fire1") && weaponSelected == 1)
+                if (Time.time - lastFired > 0.55)
                 {
-                    Debug.Log(hit.transform.name);
+                    lastFired = Time.time;
 
-                    if (hit.transform.tag == "Enemy")
+
+                    //No gasta ammo nunca
+
+                    AudioSource gunsound = GetComponent<AudioSource>();
+                    gunsound.PlayOneShot(shot);
+
+                    animP.Play("GunshotP");
+
+                    RaycastHit hit;
+                    if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit))
                     {
-                        
-                        hit.transform.SendMessage("GotHit");
+                        Debug.Log(hit.transform.name);
+
+                        if (hit.transform.tag == "Enemy")
+                        {
+
+                            hit.transform.SendMessage("GotHit");
+                        }
+                    }
+
+                }
+            if (Input.GetButton("Fire1") && weaponSelected == 2 && ammo > 0)
+                if (Time.time - lastFired > 0.15)
+                {
+                    lastFired = Time.time;
+
+                    menu.SendMessage("ContadorA");
+                    ammo -= 1;
+
+                    AudioSource gunsound = GetComponent<AudioSource>();
+                    gunsound.PlayOneShot(fire);
+
+                    animAK.Play("GunshotAK");
+
+                    RaycastHit hit;
+                    if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit))
+                    {
+                        Debug.Log(hit.transform.name);
+
+                        if (hit.transform.tag == "Enemy")
+                        {
+
+                            hit.transform.SendMessage("GotHit");
+                        }
                     }
                 }
-
-                }
-        if (Input.GetButton("Fire1") && weaponSelected == 2)
-            if (Time.time - lastFired > 0.15)
-            {
-                lastFired = Time.time;
-
-                //Remove 1 bullet from ammo
-                currentAmmo -= 1;
-
-                AudioSource gunsound = GetComponent<AudioSource>();
-                gunsound.PlayOneShot(fire);
-
-                animAK.Play("GunshotAK");
-
-                RaycastHit hit;
-                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit))
-                {
-
-
-                    if (hit.transform.tag == "Enemy")
-                    {
-
-                        hit.transform.SendMessage("GotHit");
-                    }
-                }
-            }
-
+        }
         
 
     }
 
     private void Switch()
     {
-
-    
-        if (Input.GetKeyDown(KeyCode.Alpha2) && weaponSelected == 1)
-            if (Time.time - lastSwitch > 0.7)
-            {
-                lastSwitch = Time.time;
-                pistol.SetActive(false);
-                ak.SetActive(true);
-                //Switch to AK
-                weaponSelected = 2;
-
-                AudioSource gunsound = GetComponent<AudioSource>();
-                gunsound.PlayOneShot(switchW);
+        if (muerto != true)
+        {
 
 
-                animAK.Play("TakeoutAK");
+            if (Input.GetKeyDown(KeyCode.Alpha2) && weaponSelected == 1)
+                if (Time.time - lastSwitch > 0.7)
+                {
+                    lastSwitch = Time.time;
+                    pistol.SetActive(false);
+                    ak.SetActive(true);
+                    //Switch to AK
+                    weaponSelected = 2;
+
+                    AudioSource gunsound = GetComponent<AudioSource>();
+                    gunsound.PlayOneShot(switchW);
 
 
-            }
-        if (Input.GetKeyDown(KeyCode.Alpha1) && weaponSelected == 2)
-            if (Time.time - lastSwitch > 0.7)
-            {
-                lastSwitch = Time.time;
-                pistol.SetActive(true);
-                ak.SetActive(false);
-
-                //Switch to Pistol
-                weaponSelected = 1;
-
-                AudioSource gunsound = GetComponent<AudioSource>();
-                gunsound.PlayOneShot(switchW);
+                    animAK.Play("TakeoutAK");
 
 
-                animP.Play("TakeoutP");
+                }
+            if (Input.GetKeyDown(KeyCode.Alpha1) && weaponSelected == 2)
+                if (Time.time - lastSwitch > 0.7)
+                {
+                    lastSwitch = Time.time;
+                    pistol.SetActive(true);
+                    ak.SetActive(false);
 
-            }
+                    //Switch to Pistol
+                    weaponSelected = 1;
+
+                    AudioSource gunsound = GetComponent<AudioSource>();
+                    gunsound.PlayOneShot(switchW);
+
+
+                    animP.Play("TakeoutP");
+
+                }
+        }
     }
     void GotHit()
     {
+        menu.SendMessage("ContadorHP");
         Health -= 1;
+
+    }
+    void activateW()
+    {
+        weaponSelected = 1;
     }
 }
 

@@ -21,4 +21,5 @@ public class animateCam : MonoBehaviour
             anim.Play("victoryCam");
         }
     }
+
 }

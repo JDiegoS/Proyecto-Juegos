@@ -6,12 +6,11 @@ public class CubeScript : MonoBehaviour
 {
     public GameObject PlayerC;
     public GameObject Player;
-    public float Distance;
+    public float Distance = 1;
     public float speed;
     public int allowedDistance=5;
     public RaycastHit shot;
     public Animation anims;
-    public Animation anima;
     public int Health = 4;
     public GameObject sold;
     bool dead = false;
@@ -26,19 +25,20 @@ public class CubeScript : MonoBehaviour
     float chance;
     public AudioClip scream;
     float volume;
-    public GameObject trigger;
+    public GameObject triggerr;
     int rangeD;
+    public UnityEngine.UI.Text amm;
+    public UnityEngine.UI.Text hp;
     // Start is called before the first frame update
     void Start()
     {
-
+        anims.Play("idle");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (trigger == null)
-        {
+
             if (dead == false)
             {
                 transform.LookAt(Player.transform);
@@ -49,7 +49,7 @@ public class CubeScript : MonoBehaviour
                 if(shot.rigidbody != null)
                 {
                     Distance = shot.distance;
-                    if ((Distance < allowedDistance) && (dead == false) && (Time.time - timeOfShot > 1))
+                    if ((Distance < allowedDistance) && (dead == false) && (Time.time - timeOfShot > 1) && Distance != 0)
                     {
                         timeOfShot = Time.time;
                         speed = 0f;
@@ -88,7 +88,7 @@ public class CubeScript : MonoBehaviour
 
 
                 }
-                else if (shot.rigidbody == null && (Time.time - timeOfShot > 1.5f) && (Distance <= allowedDistance) && (Distance > 0))
+                else if (shot.rigidbody == null && (Time.time - timeOfShot > 1.5f) && (Distance <= allowedDistance) && (Distance > 1))
                 {
                     timeOfShot = Time.time;
                     chanceOfHit = Random.Range(1, 4);
@@ -107,47 +107,48 @@ public class CubeScript : MonoBehaviour
                     }
                 }
             }
-            if (Health <= 0 && dead == false)
-            {
-                volume = 20 / (Distance);
-                AudioSource gunsound = GetComponent<AudioSource>();
-                while (dead != true)
-                {
-                    if (volume <= 1f)
-                    {
-                        anims.Play("death");
-                        gunsound.PlayOneShot(scream, volume);
-                        dead = true;
-                        deathtime = Time.time;
-                    }
-                    else
-                    {
-                        volume = volume / 1.2f;
-                    }
-                }
-
-            }
-            if (dead == true)
-            {
-                t = Time.time - deathtime;
-                if (t >= 3)
-                {
-                    Destroy(sold);
-                }
-
-            }
-
-            if (dead == true)
-            {
-                t = Time.time - deathtime;
-                if (t >= 3)
-                {
-                    Destroy(sold);
-                }
-
-            }
-        }
+            
         
+        if (Health <= 0 && dead == false)
+        {
+            volume = 20 / (Distance);
+            AudioSource gunsound = GetComponent<AudioSource>();
+            while (dead != true)
+            {
+                if (volume <= 1f)
+                {
+                    anims.Play("death");
+                    gunsound.PlayOneShot(scream, volume);
+                    dead = true;
+                    deathtime = Time.time;
+                }
+                else
+                {
+                    volume = volume / 1.2f;
+                }
+            }
+
+        }
+        if (dead == true)
+        {
+            t = Time.time - deathtime;
+            if (t >= 3)
+            {
+                Destroy(sold);
+            }
+
+        }
+
+        if (dead == true)
+        {
+            t = Time.time - deathtime;
+            if (t >= 3)
+            {
+                Destroy(sold);
+            }
+
+        }
+
     }
 
     void GotHit()

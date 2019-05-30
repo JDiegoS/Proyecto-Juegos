@@ -7,22 +7,36 @@ public class Hint : MonoBehaviour
     public Animation anim;
     float animReset;
     bool reset = true;
+
+    public UnityEngine.UI.Text txt;
+
     // Start is called before the first frame update
     void Start()
     {
         animReset = Time.time;
-        anim.Play("Hint");
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.H)){
-            if (Time.time - animReset >= 5){
+        
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        txt.gameObject.SetActive(true);
+        if (Input.GetKey(KeyCode.H))
+        {
+            if (Time.time - animReset >= 5)
+            {
                 animReset = Time.time;
                 anim.Play("Hint");
-                
+
             }
         }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        txt.gameObject.SetActive(false);
     }
 }
