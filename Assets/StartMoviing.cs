@@ -5,6 +5,7 @@ using UnityEngine;
 public class StartMoviing : MonoBehaviour
 {
     public GameObject trigger;
+    public AudioClip cop;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,8 @@ public class StartMoviing : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.gameObject.name);
+        AudioSource gunsound = GetComponent<AudioSource>();
+        gunsound.PlayOneShot(cop, .9f);
         if (other.gameObject.name == "Player")
         {
             Destroy(trigger);

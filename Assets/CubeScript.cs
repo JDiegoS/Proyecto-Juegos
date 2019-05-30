@@ -88,7 +88,7 @@ public class CubeScript : MonoBehaviour
 
 
                 }
-                else if (shot.rigidbody == null && (Time.time - timeOfShot > 1.5f))
+                else if (shot.rigidbody == null && (Time.time - timeOfShot > 1.5f) && (Distance <= allowedDistance) && (Distance > 0))
                 {
                     timeOfShot = Time.time;
                     chanceOfHit = Random.Range(1, 4);

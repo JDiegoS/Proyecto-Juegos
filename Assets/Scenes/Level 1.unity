@@ -1256,7 +1256,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 168969788}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -22.2, y: 37.8, z: -30.94}
+  m_LocalPosition: {x: -22.2, y: 37.51, z: -30.94}
   m_LocalScale: {x: 13, y: 80, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1638,8 +1638,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 216465291}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -28.1, y: 25.8, z: -41.2}
-  m_LocalScale: {x: 100, y: 30, z: 1}
+  m_LocalPosition: {x: -28.1, y: 21.77, z: -41.2}
+  m_LocalScale: {x: 100, y: 33, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 84
@@ -2067,7 +2067,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerC: {fileID: 1546142935}
   Player: {fileID: 1568250260}
-  Distance: 10
+  Distance: 0
   speed: 0
   allowedDistance: 40
   anims: {fileID: 1467097582}
@@ -2075,9 +2075,9 @@ MonoBehaviour:
   Health: 4
   sold: {fileID: 314531867}
   fire: {fileID: 8300000, guid: 38b450e2adcb6f542acc8c1d423bd8dc, type: 3}
-  miss: {fileID: 8300000, guid: 70525be1e3656f54898cfd7de1454480, type: 3}
+  miss: {fileID: 8300000, guid: 3e75a3c0ab1c6a74daf00d87ab33dd61, type: 3}
   miss2: {fileID: 8300000, guid: 94742f30bb1af1d439aac16be0c22a38, type: 3}
-  miss3: {fileID: 8300000, guid: 472f6560f7aae5a43b266e6455d1862c, type: 3}
+  miss3: {fileID: 8300000, guid: 1837342cdcdd6184986973c7280cca56, type: 3}
   scream: {fileID: 8300000, guid: e49ab66e5d8c29347bdb406cbc659c4e, type: 3}
   trigger: {fileID: 997775019}
 --- !u!111 &314531871
@@ -2371,7 +2371,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 345709834}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -2656,6 +2656,10 @@ PrefabInstance:
     - target: {fileID: 1959030373088092, guid: d3a9898e22901924b98de4fff69bf9e6, type: 3}
       propertyPath: m_Name
       value: Bus_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959030373088092, guid: d3a9898e22901924b98de4fff69bf9e6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4353972167979376, guid: d3a9898e22901924b98de4fff69bf9e6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5428,7 +5432,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 853884649}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -28.2, y: 15, z: -73.2}
+  m_LocalPosition: {x: -28.2, y: 15, z: -71}
   m_LocalScale: {x: 50, y: 30, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5873,6 +5877,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trigger: {fileID: 997775019}
+  cop: {fileID: 0}
 --- !u!65 &997775021
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5939,7 +5944,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 997775019}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 41.21, y: 3.13, z: 21.85}
+  m_LocalPosition: {x: 4.1, y: 3.13, z: 21.85}
   m_LocalScale: {x: 5.69, y: -0.3, z: 20.7}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5980,7 +5985,7 @@ MeshCollider:
   m_GameObject: {fileID: 1022360955}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
@@ -6998,6 +7003,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trigger: {fileID: 1166203413}
+  cop: {fileID: 0}
 --- !u!65 &1166203415
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7064,7 +7070,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1166203413}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -27.24, y: 3.13, z: 21.85}
+  m_LocalPosition: {x: -43.9, y: 3.13, z: 21.85}
   m_LocalScale: {x: 5.69, y: -0.3, z: 20.7}
   m_Children: []
   m_Father: {fileID: 0}
@@ -7362,6 +7368,10 @@ PrefabInstance:
     - target: {fileID: 1646981259178978, guid: 6f993fa0f8fc9f045888054c717741b4, type: 3}
       propertyPath: m_Name
       value: Taxi (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1646981259178978, guid: 6f993fa0f8fc9f045888054c717741b4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4870167790249810, guid: 6f993fa0f8fc9f045888054c717741b4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9599,7 +9609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerC: {fileID: 1546142935}
   Player: {fileID: 1568250260}
-  Distance: 10
+  Distance: 0
   speed: 0
   allowedDistance: 20
   anims: {fileID: 460888754}
@@ -9607,8 +9617,8 @@ MonoBehaviour:
   Health: 4
   sold: {fileID: 1546474974}
   fire: {fileID: 8300000, guid: 38b450e2adcb6f542acc8c1d423bd8dc, type: 3}
-  miss: {fileID: 8300000, guid: 70525be1e3656f54898cfd7de1454480, type: 3}
-  miss2: {fileID: 8300000, guid: 472f6560f7aae5a43b266e6455d1862c, type: 3}
+  miss: {fileID: 8300000, guid: 3e75a3c0ab1c6a74daf00d87ab33dd61, type: 3}
+  miss2: {fileID: 8300000, guid: 1837342cdcdd6184986973c7280cca56, type: 3}
   miss3: {fileID: 8300000, guid: 94742f30bb1af1d439aac16be0c22a38, type: 3}
   scream: {fileID: 8300000, guid: e49ab66e5d8c29347bdb406cbc659c4e, type: 3}
   trigger: {fileID: 997775019}
@@ -10851,7 +10861,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerC: {fileID: 1546142935}
   Player: {fileID: 1568250260}
-  Distance: 10
+  Distance: 0
   speed: 0
   allowedDistance: 70
   anims: {fileID: 1630525824}
@@ -10860,8 +10870,8 @@ MonoBehaviour:
   sold: {fileID: 1697075945}
   fire: {fileID: 8300000, guid: 38b450e2adcb6f542acc8c1d423bd8dc, type: 3}
   miss: {fileID: 8300000, guid: 94742f30bb1af1d439aac16be0c22a38, type: 3}
-  miss2: {fileID: 8300000, guid: 472f6560f7aae5a43b266e6455d1862c, type: 3}
-  miss3: {fileID: 8300000, guid: 70525be1e3656f54898cfd7de1454480, type: 3}
+  miss2: {fileID: 8300000, guid: 3e75a3c0ab1c6a74daf00d87ab33dd61, type: 3}
+  miss3: {fileID: 8300000, guid: 1837342cdcdd6184986973c7280cca56, type: 3}
   scream: {fileID: 8300000, guid: e49ab66e5d8c29347bdb406cbc659c4e, type: 3}
   trigger: {fileID: 1166203413}
 --- !u!111 &1697075949
@@ -11475,6 +11485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trigger: {fileID: 1781197091}
+  cop: {fileID: 0}
 --- !u!65 &1781197093
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11541,7 +11552,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1781197091}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.8, y: 3.13, z: 21.85}
+  m_LocalPosition: {x: -17.9, y: 3.13, z: 21.85}
   m_LocalScale: {x: 5.69, y: -0.3, z: 20.7}
   m_Children: []
   m_Father: {fileID: 0}
@@ -13197,7 +13208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerC: {fileID: 1546142935}
   Player: {fileID: 1568250260}
-  Distance: 10
+  Distance: 0
   speed: 0
   allowedDistance: 50
   anims: {fileID: 637692848}
@@ -13206,8 +13217,8 @@ MonoBehaviour:
   sold: {fileID: 2058682853}
   fire: {fileID: 8300000, guid: 38b450e2adcb6f542acc8c1d423bd8dc, type: 3}
   miss: {fileID: 8300000, guid: 94742f30bb1af1d439aac16be0c22a38, type: 3}
-  miss2: {fileID: 8300000, guid: 472f6560f7aae5a43b266e6455d1862c, type: 3}
-  miss3: {fileID: 8300000, guid: 70525be1e3656f54898cfd7de1454480, type: 3}
+  miss2: {fileID: 8300000, guid: 3e75a3c0ab1c6a74daf00d87ab33dd61, type: 3}
+  miss3: {fileID: 8300000, guid: 1837342cdcdd6184986973c7280cca56, type: 3}
   scream: {fileID: 8300000, guid: e49ab66e5d8c29347bdb406cbc659c4e, type: 3}
   trigger: {fileID: 1781197091}
 --- !u!111 &2058682857

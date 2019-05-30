@@ -98,7 +98,7 @@ public class PauseMenu : MonoBehaviour
     }
     public void Contador()
     {
-        txt.text = "Coins: " + cont;
+        txt.text = "C " + cont;
     }
     public void Victory()
     {
@@ -118,12 +118,21 @@ public class PauseMenu : MonoBehaviour
     public void Restart()
     {
 
-        SceneManager.LoadScene("Maze");
+        SceneManager.LoadScene("Level1");
     }
     public void Mainmenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("GUI");
     }
+    public void StartL()
+    {
+        SceneManager.LoadScene("Level1");
+    }
+    public void Pre()
+    {
+        SceneManager.LoadScene("Preface");
+    }
+
 
 }
 
