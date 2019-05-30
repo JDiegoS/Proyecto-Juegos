@@ -62,6 +62,8 @@
   <ItemGroup>
     <Compile Include="Assets\animateCam.cs" />
     <Compile Include="Assets\CubeScript.cs" />
+    <Compile Include="Assets\GlowCube.cs" />
+    <Compile Include="Assets\guiscript.cs" />
     <Compile Include="Assets\Hint.cs" />
     <Compile Include="Assets\Menu\PauseMenu.cs" />
     <Compile Include="Assets\pickup.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="Assets\Scripts\TiltWindow.cs" />
     <Compile Include="Assets\scrr.cs" />
     <Compile Include="Assets\StartMoviing.cs" />
+    <Compile Include="Assets\VictoryScript.cs" />
     <None Include="Assets\Materials\UI-Default-No-Alpha.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/jdieg/Desktop/Proyecto Final/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>

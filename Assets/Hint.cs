@@ -7,6 +7,8 @@ public class Hint : MonoBehaviour
     public Animation anim;
     float animReset;
     bool reset = true;
+    bool sono = false;
+    public AudioClip clip;
 
     public UnityEngine.UI.Text txt;
 
@@ -24,6 +26,13 @@ public class Hint : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
+        if(sono == false)
+        {
+            AudioSource gunsound = GetComponent<AudioSource>();
+            gunsound.PlayOneShot(clip, .9f);
+            sono = true;
+        }
+        
         txt.gameObject.SetActive(true);
         if (Input.GetKey(KeyCode.H))
         {

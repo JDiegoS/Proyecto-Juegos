@@ -7,6 +7,7 @@ public class PauseMenu : MonoBehaviour
     public UnityEngine.UI.Text txt;
     public UnityEngine.UI.Text amm;
     public UnityEngine.UI.Text hp;
+    public UnityEngine.UI.Image aim;
     private bool isPause = false;
     private int cont = 0;
     bool f1 = true;
@@ -14,10 +15,23 @@ public class PauseMenu : MonoBehaviour
     bool f3 = true;
     bool f4 = true;
     public AudioSource collect;
-    float health = 15;
+    float health = 20;
     int ammo = 60;
     private float masterVolume = 1;
     float h;
+    public AudioClip loss;
+    public GameObject pl;
+    public GameObject panel;
+    public GameObject defeat;
+    public GameObject pause;
+    public GameObject contr;
+    public GameObject g1;
+    public GameObject g2;
+    public GameObject g3;
+    public GameObject cam;
+    public GameObject camp;
+    public GameObject caml;
+    public GameObject camc;
 
 
     // Start is called before the first frame update
@@ -50,7 +64,7 @@ public class PauseMenu : MonoBehaviour
         }
         if(health> 0)
         {
-            h = (health / 15) * 100;
+            h = (health / 20) * 100;
             hp.text = "" + h + "%";
         }
         if (health <= 0)
@@ -69,17 +83,46 @@ public class PauseMenu : MonoBehaviour
 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        transform.Find("PauseMenu").gameObject.SetActive(true);        
+        
+        cam.SetActive(false);
+        caml.SetActive(false);
+        
+        camc.SetActive(false);
+
+        panel.SetActive(false);
+        contr.SetActive(false);
+        g1.SetActive(false);
+        g2.SetActive(false);
+        aim.gameObject.SetActive(false);
+
+        pause.SetActive(true);
+        camp.SetActive(true);
         isPause = true;
 
     }
     public void Continue()
     {
-        transform.Find("PauseMenu").gameObject.SetActive(false);
+        camc.SetActive(false);
+        cam.SetActive(true);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         Time.timeScale = 1.0f;
+        
+        caml.SetActive(false);
+        camp.SetActive(false);
+        contr.SetActive(false);
+
+        
+        g1.SetActive(false);
+        g2.SetActive(false);
+        
+        pause.SetActive(false);
+
+        
+        aim.gameObject.SetActive(true);
+        panel.SetActive(true);
+
         isPause = false;
     }
     public void ContadorA()
@@ -108,13 +151,50 @@ public class PauseMenu : MonoBehaviour
     public void Defeat()
     {
         Time.timeScale = 0.0f;
-        transform.Find("Defeat").gameObject.SetActive(true);
+        Destroy(pl);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        collect.Stop();
+        cam.SetActive(false);
+        caml.SetActive(true);
+        camp.SetActive(false);
+        camc.SetActive(false);
+        panel.SetActive(false);
+        contr.SetActive(false);
+        g1.SetActive(false);
+        g2.SetActive(false);
+        aim.gameObject.SetActive(false);
+        collect.PlayOneShot(loss, 1f);
+        defeat.SetActive(true);
 
+    }
+    public void Controls()
+    {
+        Time.timeScale = 0.0f;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        cam.SetActive(false);
+        caml.SetActive(false);
+        camp.SetActive(false);
+        
+        panel.SetActive(false);
+        g1.SetActive(false);
+        g2.SetActive(false);
+        aim.gameObject.SetActive(false);
+        defeat.SetActive(false);
+        
+        pause.SetActive(false);
+
+        contr.SetActive(true);
+        camc.SetActive(true);
+
+        isPause = true;
     }
     public void Restart()
     {
 
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene("Level 1");
     }
     public void Mainmenu()
     {
@@ -122,7 +202,7 @@ public class PauseMenu : MonoBehaviour
     }
     public void StartL()
     {
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene("Level 1");
     }
     public void Pre()
     {

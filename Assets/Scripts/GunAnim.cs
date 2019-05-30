@@ -28,7 +28,7 @@ public class GunAnim : MonoBehaviour
     public int Health = 1;
     bool muerto = false;
     float regenTime;
-    float healthT=-15;
+    float healthT=-20;
     int ammo = 60;
     bool reg = false;
     public GameObject menu;
